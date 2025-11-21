@@ -1,44 +1,67 @@
+/* ============================================
+   RESET Y ESTILOS GLOBALES
+   ============================================ */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* ============================================
+   ESTILOS DEL BODY
+   ============================================ */
 body {
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: background 0.5s;
+  transition: background 0.5s ease;
   min-height: 100vh;
+  overflow: hidden;
 }
 
+/* ============================================
+   CONTENEDOR PRINCIPAL - CALCULADORA
+   ============================================ */
 .calculator {
   background: #1e1e1e;
   padding: 25px;
-  padding-top: 70px; /* ← espacio para el botón tema + historial */
+  padding-top: 70px; /* Espacio para el botón tema + historial */
   border-radius: 25px;
-  box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
   width: 350px;
   position: relative;
-  transition: all 0.5s;
+  transition: all 0.5s ease;
 }
 
+/* ✨ Mejora: Sombra de enfoque para accesibilidad */
+.calculator:focus-within {
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(102, 126, 234, 0.3);
+}
+
+/* ============================================
+   HISTORIAL DE OPERACIONES
+   ============================================ */
 .history {
   position: absolute;
   top: 28px;
   left: 25px;
-  right: 80px;           /* deja espacio al botón del tema */
-  color: rgba(255,255,255,0.7);
+  right: 80px; /* Deja espacio al botón del tema */
+  color: rgba(255, 255, 255, 0.7);
   text-align: right;
   font-size: 1.1rem;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  transition: color 0.3s ease;
+  font-weight: 500;
 }
 
+/* ============================================
+   PANTALLA (DISPLAY)
+   ============================================ */
 .display {
   width: 100%;
   height: 90px;
@@ -50,49 +73,112 @@ body {
   border: none;
   border-radius: 15px;
   margin-bottom: 20px;
+  transition: all 0.3s ease;
+  font-weight: 300;
+  letter-spacing: 2px;
+  font-family: 'Courier New', monospace; /* Fuente monoespaciada para números */
+  cursor: not-allowed;
 }
 
-.buttons { /* sin cambios */
+/* ✨ Mejora: Efecto visual en el display */
+.display:disabled {
+  opacity: 1;
+}
+
+/* ============================================
+   CONTENEDOR DE BOTONES
+   ============================================ */
+.buttons {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 15px;
 }
 
-.btn { /* sin cambios */
+/* ============================================
+   ESTILOS DE BOTONES GENERALES
+   ============================================ */
+.btn {
   height: 70px;
   border: none;
   border-radius: 15px;
   font-size: 1.6rem;
   font-weight: bold;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+/* ✨ Estado activo con mejor feedback visual */
 .btn:active {
   transform: scale(0.92);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
+/* ✨ Estado de enfoque para accesibilidad con teclado */
+.btn:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+/* ============================================
+   BOTONES DE NÚMEROS
+   ============================================ */
 .number, .zero {
   background: #333;
   color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
-.number:hover, .zero:hover { background: #444; }
+.number:hover, .zero:hover {
+  background: #444;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
 
+/* ============================================
+   BOTONES DE OPERADORES
+   ============================================ */
 .operator, .equal {
   background: #ff9500;
   color: white;
+  box-shadow: 0 4px 15px rgba(255, 149, 0, 0.3);
 }
 
-.operator:hover, .equal:hover { background: #ffb143; }
+.operator:hover, .equal:hover {
+  background: #ffb143;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 149, 0, 0.4);
+}
 
-.clear { background: #a6a6a6; color: black; }
-.clear:hover { background: #c5c5c5; }
+/* ============================================
+   BOTONES DE LIMPIAR
+   ============================================ */
+.clear {
+  background: #a6a6a6;
+  color: black;
+  box-shadow: 0 4px 15px rgba(166, 166, 166, 0.3);
+  font-weight: 600;
+}
 
-.zero { grid-column: span 2; }
+.clear:hover {
+  background: #c5c5c5;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(166, 166, 166, 0.4);
+}
 
-/* Botón tema bien colocado y bonito */
+/* ============================================
+   BOTÓN CERO (ANCHO DOBLE)
+   ============================================ */
+.zero {
+  grid-column: span 2;
+}
+
+/* ============================================
+   BOTÓN DE CAMBIO DE TEMA
+   ============================================ */
 .theme-toggle {
   position: absolute;
   top: 20px;
@@ -100,19 +186,258 @@ body {
   width: 50px;
   height: 50px;
   background: #333;
-  border: none;
+  border: 2px solid #444;
   border-radius: 50%;
   font-size: 1.5rem;
   cursor: pointer;
   z-index: 10;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Tema claro (sin cambios) */
+.theme-toggle:hover {
+  background: #444;
+  transform: scale(1.1) rotate(15deg);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+
+.theme-toggle:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 3px;
+}
+
+/* ============================================
+   TEMA CLARO (LIGHT MODE)
+   ============================================ */
 body.light {
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
-.light .calculator { background: white; }
-.light .display { background: #f8f9fa; color: #333; }
-.light .number, .light .zero { background: #e0e0e0; color: #333; }
-.light .history { color: rgba(0,0,0,0.6); }
-.light .theme-toggle { background: #ddd; }
+
+body.light .calculator {
+  background: white;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+}
+
+body.light .display {
+  background: #f8f9fa;
+  color: #333;
+  border: 2px solid #e0e0e0;
+}
+
+body.light .number,
+body.light .zero {
+  background: #e0e0e0;
+  color: #333;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+body.light .number:hover,
+body.light .zero:hover {
+  background: #d0d0d0;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+body.light .operator,
+body.light .equal {
+  background: #ff9500;
+  color: white;
+  box-shadow: 0 4px 15px rgba(255, 149, 0, 0.2);
+}
+
+body.light .operator:hover,
+body.light .equal:hover {
+  background: #ffb143;
+  box-shadow: 0 6px 20px rgba(255, 149, 0, 0.3);
+}
+
+body.light .clear {
+  background: #d3d3d3;
+  color: #333;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+body.light .clear:hover {
+  background: #c5c5c5;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+body.light .history {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+body.light .theme-toggle {
+  background: #ddd;
+  border-color: #ccc;
+}
+
+body.light .theme-toggle:hover {
+  background: #ccc;
+}
+
+/* ============================================
+   RESPONSIVIDAD - TABLETS (768px o menos)
+   ============================================ */
+@media (max-width: 768px) {
+  .calculator {
+    width: 90vw;
+    max-width: 400px;
+    padding: 15px;
+    padding-top: 65px;
+    border-radius: 20px;
+  }
+
+  .btn {
+    height: 60px;
+    font-size: 1.4rem;
+  }
+
+  .display {
+    height: 80px;
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+  }
+
+  .buttons {
+    gap: 12px;
+  }
+
+  .history {
+    font-size: 1rem;
+    right: 75px;
+  }
+
+  .theme-toggle {
+    width: 45px;
+    height: 45px;
+    font-size: 1.3rem;
+  }
+}
+
+/* ============================================
+   RESPONSIVIDAD - MÓVILES (480px o menos)
+   ============================================ */
+@media (max-width: 480px) {
+  .calculator {
+    width: 95vw;
+    padding: 12px;
+    padding-top: 55px;
+    border-radius: 15px;
+  }
+
+  .btn {
+    height: 50px;
+    font-size: 1.2rem;
+    border-radius: 10px;
+  }
+
+  .display {
+    height: 70px;
+    font-size: 2rem;
+    padding: 0 15px;
+    margin-bottom: 12px;
+  }
+
+  .buttons {
+    gap: 10px;
+  }
+
+  .history {
+    font-size: 0.9rem;
+    right: 65px;
+    top: 25px;
+  }
+
+  .theme-toggle {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    top: 15px;
+    right: 15px;
+  }
+
+  body {
+    padding: 10px;
+  }
+}
+
+/* ============================================
+   RESPONSIVIDAD - MÓVILES MUY PEQUEÑOS (320px)
+   ============================================ */
+@media (max-width: 360px) {
+  .calculator {
+    width: 98vw;
+    padding: 10px;
+    padding-top: 50px;
+  }
+
+  .btn {
+    height: 45px;
+    font-size: 1.1rem;
+  }
+
+  .display {
+    height: 60px;
+    font-size: 1.8rem;
+  }
+
+  .buttons {
+    gap: 8px;
+  }
+}
+
+/* ============================================
+   MODO OSCURO DEL SISTEMA (prefers-color-scheme)
+   ============================================ */
+@media (prefers-color-scheme: light) {
+  body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  }
+
+  .calculator {
+    background: white;
+  }
+
+  .display {
+    background: #f8f9fa;
+    color: #333;
+  }
+}
+
+/* ============================================
+   ANIMACIONES DE TRANSICIÓN
+   ============================================ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.calculator {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* ============================================
+   REDUCCIÓN DE MOVIMIENTO (Accesibilidad)
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .btn:active {
+    transform: none;
+  }
+
+  .btn:hover {
+    transform: none;
+  }
+}

@@ -1,47 +1,175 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <!-- Meta tags básicos -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculadora Pro v0.2</title>
+  <meta name="description" content="Calculadora digital moderna con tema claro/oscuro, historial y soporte de teclado">
+  <meta name="theme-color" content="#667eea">
+  
+  <!-- Título de la página -->
+  <title>Calculadora Pro v0.3</title>
+  
+  <!-- Estilos CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Contenedor principal de la calculadora -->
   <div class="calculator">
-    <button class="theme-toggle" id="themeToggle">☀️</button>
     
-    <div class="history" id="history"></div>
+    <!-- Botón para cambiar tema (claro/oscuro) -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema claro/oscuro">☀️</button>
     
-    <input type="text" class="display" id="display" disabled value="0">
+    <!-- Historial de operaciones -->
+    <div class="history" id="history" aria-live="polite" aria-label="Historial de operaciones"></div>
+    
+    <!-- Pantalla de display -->
+    <input 
+      type="text" 
+      class="display" 
+      id="display" 
+      disabled 
+      value="0"
+      aria-label="Pantalla de resultados"
+      aria-readonly="true">
 
-    <div class="buttons">
-      <button class="btn clear" onclick="clearDisplay()">C</button>
-      <button class="btn clear" onclick="deleteLast()">⌫</button>
-      <button class="btn operator" onclick="percent()">%</button>
-      <button class="btn operator" onclick="setOperator('/')">/</button>
+    <!-- Contenedor de botones -->
+    <div class="buttons" role="group" aria-label="Botones de la calculadora">
+      
+      <!-- Fila 1: Funciones especiales -->
+      <button 
+        class="btn clear" 
+        onclick="clearDisplay()" 
+        aria-label="Borrar pantalla completamente">
+        C
+      </button>
+      <button 
+        class="btn clear" 
+        onclick="deleteLast()" 
+        aria-label="Eliminar último dígito">
+        ⌫
+      </button>
+      <button 
+        class="btn operator" 
+        onclick="percent()" 
+        aria-label="Calcular porcentaje">
+        %
+      </button>
+      <button 
+        class="btn operator" 
+        onclick="setOperator('/')" 
+        aria-label="Dividir">
+        /
+      </button>
 
-      <button class="btn number" onclick="appendToDisplay('7')">7</button>
-      <button class="btn number" onclick="appendToDisplay('8')">8</button>
-      <button class="btn number" onclick="appendToDisplay('9')">9</button>
-      <button class="btn operator" onclick="setOperator('*')">×</button>
+      <!-- Fila 2: Números 7, 8, 9 y multiplicación -->
+      <button 
+        class="btn number" 
+        onclick="appendToDisplay('7')" 
+        aria-label="Número siete">
+        7
+      </button>
+      <button 
+        class="btn number" 
+        onclick="appendToDisplay('8')" 
+        aria-label="Número ocho">
+        8
+      </button>
+      <button 
+        class="btn number" 
+        onclick="appendToDisplay('9')" 
+        aria-label="Número nueve">
+        9
+      </button>
+      <button 
+        class="btn operator" 
+        onclick="setOperator('*')" 
+        aria-label="Multiplicar">
+        ×
+      </button>
 
-      <button class="btn number" onclick="appendToDisplay('4')">4</button>
-      <button class="btn number" onclick="appendToDisplay('5')">5</button>
-      <button class="btn number" onclick="appendToDisplay('6')">6</button>
-      <button class="btn operator" onclick="setOperator('-')">−</button>
+      <!-- Fila 3: Números 4, 5, 6 y resta -->
+      <button 
+        class="btn number" 
+        onclick="appendToDisplay('4')" 
+        aria-label="Número cuatro">
+        4
+      </button>
+      <button 
+        class="btn number" 
+        onclick="appendToDisplay('5')" 
+        aria-label="Número cinco">
+        5
+      </button>
+      <button 
+        class="btn number" 
+        onclick="appendToDisplay('6')" 
+        aria-label="Número seis">
+        6
+      </button>
+      <button 
+        class="btn operator" 
+        onclick="setOperator('-')" 
+        aria-label="Restar">
+        −
+      </button>
 
-      <button class="btn number" onclick="appendToDisplay('1')">1</button>
-      <button class="btn number" onclick="appendToDisplay('2')">2</button>
-      <button class="btn number" onclick="appendToDisplay('3')">3</button>
-      <button class="btn operator" onclick="setOperator('+')">+</button>
+      <!-- Fila 4: Números 1, 2, 3 y suma -->
+      <button 
+        class="btn number" 
+        onclick="appendToDisplay('1')" 
+        aria-label="Número uno">
+        1
+      </button>
+      <button 
+        class="btn number" 
+        onclick="appendToDisplay('2')" 
+        aria-label="Número dos">
+        2
+      </button>
+      <button 
+        class="btn number" 
+        onclick="appendToDisplay('3')" 
+        aria-label="Número tres">
+        3
+      </button>
+      <button 
+        class="btn operator" 
+        onclick="setOperator('+')" 
+        aria-label="Sumar">
+        +
+      </button>
 
-      <button class="btn operator" onclick="changeSign()">+/−</button>
-      <button class="btn zero" onclick="appendToDisplay('0')">0</button>
-      <button class="btn number" onclick="appendToDisplay('.')">.</button>
-      <button class="btn equal" onclick="calculate()">=</button>
+      <!-- Fila 5: Cambiar signo, 0, punto decimal y igual -->
+      <button 
+        class="btn operator" 
+        onclick="changeSign()" 
+        aria-label="Cambiar signo positivo o negativo">
+        +/−
+      </button>
+      <button 
+        class="btn zero" 
+        onclick="appendToDisplay('0')" 
+        aria-label="Número cero">
+        0
+      </button>
+      <button 
+        class="btn number" 
+        onclick="appendToDisplay('.')" 
+        aria-label="Punto decimal">
+        .
+      </button>
+      <button 
+        class="btn equal" 
+        onclick="calculate()" 
+        aria-label="Calcular resultado">
+        =
+      </button>
+      
     </div>
   </div>
 
+  <!-- Script JavaScript -->
   <script src="script.js"></script>
 </body>
 </html>
