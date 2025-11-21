@@ -11,88 +11,108 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: background 0.5s;
+  min-height: 100vh;
 }
 
 .calculator {
   background: #1e1e1e;
-  padding: 20px;
-  border-radius: 20px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-  width: 320px;
+  padding: 25px;
+  padding-top: 70px; /* ← espacio para el botón tema + historial */
+  border-radius: 25px;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+  width: 350px;
+  position: relative;
+  transition: all 0.5s;
+}
+
+.history {
+  position: absolute;
+  top: 28px;
+  left: 25px;
+  right: 80px;           /* deja espacio al botón del tema */
+  color: rgba(255,255,255,0.7);
+  text-align: right;
+  font-size: 1.1rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .display {
   width: 100%;
-  height: 80px;
+  height: 90px;
   background: #000;
   color: white;
-  font-size: 2.5rem;
+  font-size: 3rem;
   text-align: right;
   padding: 0 20px;
   border: none;
-  border-radius: 10px;
+  border-radius: 15px;
   margin-bottom: 20px;
-  letter-spacing: 2px;
 }
 
-.buttons {
+.buttons { /* sin cambios */
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 15px;
 }
 
-.btn {
+.btn { /* sin cambios */
   height: 70px;
   border: none;
   border-radius: 15px;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .btn:active {
-  transform: scale(0.95);
+  transform: scale(0.92);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
-.number, .zero, .decimal {
+.number, .zero {
   background: #333;
   color: white;
 }
 
-.number:hover, .zero:hover {
-  background: #444;
-}
+.number:hover, .zero:hover { background: #444; }
 
-.operator {
+.operator, .equal {
   background: #ff9500;
   color: white;
-  font-weight: bold;
 }
 
-.operator:hover {
-  background: #ffb143;
+.operator:hover, .equal:hover { background: #ffb143; }
+
+.clear { background: #a6a6a6; color: black; }
+.clear:hover { background: #c5c5c5; }
+
+.zero { grid-column: span 2; }
+
+/* Botón tema bien colocado y bonito */
+.theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background: #333;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 10;
 }
 
-.clear {
-  background: #a6a6a6;
-  color: black;
+/* Tema claro (sin cambios) */
+body.light {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
-
-.clear:hover {
-  background: #c5c5c5;
-}
-
-.equal {
-  background: #ff9500;
-  color: white;
-  grid-row: span 2;
-}
-
-.equal:hover {
-  background: #ffb143;
-}
-
-.zero {
-  grid-column: span 2;
-}
+.light .calculator { background: white; }
+.light .display { background: #f8f9fa; color: #333; }
+.light .number, .light .zero { background: #e0e0e0; color: #333; }
+.light .history { color: rgba(0,0,0,0.6); }
+.light .theme-toggle { background: #ddd; }
