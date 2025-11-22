@@ -67,6 +67,15 @@ function appendToDisplay(value) {
 /**
  * Limpia el display, el historial y reinicia todas las variables
  */
+ 
+function handleCalculationError(error) {
+  display.value = `Error: ${error.message}`;
+  currentInput = '0';
+  operator = null;
+  shouldResetDisplay = true;
+  triggerVibration(CONFIG.VIBRATION_LONG);
+} 
+ 
 function clearDisplay() {
   currentInput = '0';
   previousInput = '';
